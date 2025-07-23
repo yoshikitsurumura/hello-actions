@@ -1,0 +1,20 @@
+name: Hello Actions
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  run-python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: コードをダウンロード
+        uses: actions/checkout@v4
+
+      - name: Pythonセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Pythonコード実行
+        run: python hello.py
