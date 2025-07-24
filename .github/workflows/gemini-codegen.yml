@@ -1,0 +1,25 @@
+name: Gemini Codegen  # ワークフローの名前（GitHub上に表示される）
+
+on:
+  workflow_dispatch:  # 手動で実行できるようにする
+
+jobs:
+  generate:           # Jobの名前（自由）
+    runs-on: ubuntu-latest  # Linux上で実行
+
+    steps:            # ここに実行する処理の順番を書く
+      - name: Checkout repository  # 自分のコードをGitHub上に取り込む
+        uses: actions/checkout@v3
+
+      - name: Set up Python        # Pythonのバージョンを指定して使えるようにする
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies  # Geminiを使うためのライブラリをインストール
+        run: pip install google-generativeai
+
+      - name: Run Gemini code generation script  # Pythonスクリプトを実行
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}  # 秘密のAPIキーを渡す
+        run: python generate_code.py
